@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/types";
 import { workExperienceSchema, WorkExperienceValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -164,6 +165,23 @@ function WorkExperienceItem({ form, index, remove }: WorkExperienceItemProps) {
       <FormDescription>
         Leave <span className="font-bold">end date</span> empty if you are currently working here.
       </FormDescription>
+      <FormField 
+        control={form.control}
+        name={`workExperiences.${index}.description`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Description</FormLabel>
+            <FormControl>
+            <Textarea 
+              {...field}
+            />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <Button variant="destructive" type="button" onClick={() => remove(index)}>Remove</Button>
     </div>
   )
 }
