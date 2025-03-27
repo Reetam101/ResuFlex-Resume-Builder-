@@ -8,30 +8,38 @@ import Footer from "./Footer";
 import { useState } from "react";
 import { ResumeValues } from "@/lib/validation";
 import ResumePreviewSection from "./ResumePreviewSection";
-import { cn } from "@/lib/utils";
+import { cn, mapToResumeValues } from "@/lib/utils";
 import useUnloadWarning from "@/hooks/useUnloadWarning";
 import useAutoSaveResume from "./useAutoSaveResume";
+import { ResumeServerData } from "@/lib/types";
 
-const ResumeEditor = () => {
+interface ResumeEditorProps {
+  resumeToEdit: ResumeServerData | null;
+}
+
+const ResumeEditor = ({ resumeToEdit }: ResumeEditorProps) => {
 
   const searchParams = useSearchParams();
 
-  const [resumeData, setResumeData] = useState<ResumeValues>({
-    title: "",
-    description: "",
-    photo: null,
-    firstName: "",
-    lastName: "",
-    jobTitle: "",
-    city: "",
-    country: "",
-    phone: "",
-    email: "",
-    workExperiences: [],
-    educations: [],
-    skills: [],
-    summary: "",
-  });
+  const [resumeData, setResumeData] = useState<ResumeValues>(
+    resumeToEdit ? mapToResumeValues(resumeToEdit) : 
+      {
+        // title: "",
+        // description: "",
+        // photo: null,
+        // firstName: "",
+        // lastName: "",
+        // jobTitle: "",
+        // city: "",
+        // country: "",
+        // phone: "",
+        // email: "",
+        // workExperiences: [],
+        // educations: [],
+        // skills: [],
+        // summary: "",
+      }
+  );
 
   const [showSmResumePreview, setShowSmResumePreview] = useState(false);
 

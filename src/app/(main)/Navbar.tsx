@@ -18,12 +18,19 @@ export default function Navbar() {
         <Image
           src={logo}
           alt="logo"
-          width={35}
-          height={35}
-          className="rounded-full"
+          width={70}
+          height={70}
+          // className="rounded-full"
         />
         <span className="text-xl font-bold tracking-tight">
-          AI Resume
+          <span style={{
+            color: "#dc4f50"
+          }}>R</span><span style={{
+            color: "#439751"
+          }}>esu</span><span style={{
+            color: "#867cb3",
+            fontStyle: "italic"
+          }}>Flex</span>
         </span>
       </Link>
       <div className="flex items-center gap-3">

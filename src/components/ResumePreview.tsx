@@ -200,7 +200,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
 
 function SkillsSection({ resumeData }: ResumeSectionProps) {
   const { skills, colorHex, borderStyle } = resumeData;
-
+  console.log(skills);
   if(!skills?.length) {
     return null;
   }
