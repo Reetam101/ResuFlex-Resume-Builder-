@@ -15,7 +15,8 @@ interface ResumePreviewProps {
 export default function ResumePreview({resumeData, className}: ResumePreviewProps) {
 
   const containerRef = useRef<HTMLDivElement>(null) 
-
+  const { fontStyle } = resumeData;
+  console.log("fontStyle: ", fontStyle);
   const {width} = useDimensions(containerRef);
 
   return <div className={cn("bg-white text-black h-fit w-full aspect-[210/297]", className)}
@@ -24,7 +25,8 @@ export default function ResumePreview({resumeData, className}: ResumePreviewProp
     <div
     className={cn("space-y-6 p-6", !width && "invisible")}
     style={{
-      zoom: (1/794) * width
+      zoom: (1/794) * width,
+      fontFamily: fontStyle
     }}>
       <PersonalInfoHeader resumeData={resumeData} />
       <SummarySection resumeData={resumeData} />

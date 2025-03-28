@@ -25,6 +25,7 @@ model Resume {
   country String?
   phone String?
   email String?
+  fontStyle String @default("Montserrat")
 
   workExperiences WorkExperience[]
   educations Education[]
