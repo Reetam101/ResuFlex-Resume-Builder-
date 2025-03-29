@@ -7,19 +7,28 @@ import { useToast } from "@/hooks/use-toast";
 import { ResumeServerData } from "@/lib/types";
 import { mapToResumeValues } from "@/lib/utils";
 import { formatDate } from "date-fns";
-import { MoreVertical, Trash2 } from "lucide-react";
+import { MoreVertical, Printer, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { deleteResume } from "./actions";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import LoadingButton from "@/components/LoadingButton";
+import { useReactToPrint } from "react-to-print"
+import { on } from "events";
 
 interface ResumeItemsProps {
   resume: ResumeServerData
 }
 
 export default function ResumeItem({resume}: ResumeItemsProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    documentTitle: resume.title || "Resume"
+  })
+
   const wasUpdatedAt = resume.updatedAt !== resume.createdAt;
 
   return <div className="group relative border rounded-lg border-transparent hover:border-border transition-colors bg-secondary p-3">
@@ -41,6 +50,7 @@ export default function ResumeItem({resume}: ResumeItemsProps) {
       > 
         <ResumePreview 
           resumeData={mapToResumeValues(resume)}
+          contentRef={contentRef}
           className="overflow-hidden shadow-sm group-hover:shadow-lg transition-shadow"  
         /> 
 
@@ -50,15 +60,16 @@ export default function ResumeItem({resume}: ResumeItemsProps) {
         
       </Link>
     </div>
-    <MoreMenu resumeId={resume.id} />
+    <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn} />
   </div>
 }
 
 interface MoreMenuProps {
   resumeId: string;
+  onPrintClick: () => void;
 }
 
-function MoreMenu({resumeId}: MoreMenuProps) {
+function MoreMenu({resumeId, onPrintClick}: MoreMenuProps) {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   return (
@@ -73,6 +84,12 @@ function MoreMenu({resumeId}: MoreMenuProps) {
           <DropdownMenuItem className="flex items-center gap-2" onClick={() => setShowDeleteConfirmation(true)}>
             <Trash2 className="size-4" />
             Delete
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center gap-2"
+            onClick={onPrintClick}
+          >
+            <Printer className="size-4" />
+            Print
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

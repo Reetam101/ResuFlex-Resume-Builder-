@@ -8,14 +8,16 @@ import { Badge } from "./ui/badge";
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 interface ResumePreviewProps {
   resumeData: ResumeValues;
+  contentRef?: React.Ref<HTMLDivElement>;
   className?: string;
 }
 
 
-export default function ResumePreview({resumeData, className}: ResumePreviewProps) {
+export default function ResumePreview({resumeData, contentRef, className}: ResumePreviewProps) {
 
   const containerRef = useRef<HTMLDivElement>(null) 
   const { fontStyle } = resumeData;
+  console.log(resumeData)
   console.log("fontStyle: ", fontStyle);
   const {width} = useDimensions(containerRef);
 
@@ -27,7 +29,10 @@ export default function ResumePreview({resumeData, className}: ResumePreviewProp
     style={{
       zoom: (1/794) * width,
       fontFamily: fontStyle
-    }}>
+    }}
+    ref={contentRef}
+    id="resumePreviewContent"
+    >
       <PersonalInfoHeader resumeData={resumeData} />
       <SummarySection resumeData={resumeData} />
       <WorkExperienceSection resumeData={resumeData} />
@@ -42,8 +47,9 @@ interface ResumeSectionProps {
 }
 
 function PersonalInfoHeader({resumeData}: ResumeSectionProps) {    
+  console.log(resumeData);
     const { photo, firstName, lastName, jobTitle, city, country, phone, email, colorHex, borderStyle } = resumeData;
-
+  console.log("borderStyle ", borderStyle);
   const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
 
   useEffect(() => {
