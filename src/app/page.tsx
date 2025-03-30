@@ -2,6 +2,7 @@
 
 import logo from "@/assets/logo.png"
 import preview from "@/assets/preview.png"
+import { premiumFeatures, premiumPlusFeatures } from "@/components/premium/PremiumModal";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -36,7 +37,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[hsl(60 56% 91)] to-white">
       {/* Navigation */}
-      <nav className="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <nav className="container mx-auto px-4 sm:px-10 py-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
           {/* <Rocket className="h-6 w-6 text-[#867cb3]" /> */}
           {/* <span className="text-xl font-bold text-[#867cb3]">ResuFlex</span> */}
@@ -60,7 +61,7 @@ export default function Home() {
         </div>
         
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-4 px-6">
           <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]">Features</Button>
           <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]">Pricing</Button>
           <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]">Templates</Button>
@@ -286,30 +287,35 @@ export default function Home() {
             Choose the plan that works best for you
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
             <Card>
               <CardHeader>
-                <CardTitle>Free</CardTitle>
+                <CardTitle>Premium</CardTitle>
                 <CardDescription>Perfect for getting started</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="mb-6">
-                  <span className="text-3xl sm:text-4xl font-bold">$0</span>
+                  <span className="text-3xl sm:text-4xl font-bold">$5</span>
                   <span className="text-gray-500">/month</span>
                 </div>
                 <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
+                  {
+                    premiumFeatures.map((feat) => (
+                      <li className="flex items-center">
                     <Check className="h-5 w-5 text-[#867cb3] mr-2" />
-                    <span>1 Resume</span>
+                    <span>{feat}</span>
                   </li>
-                  <li className="flex items-center">
+                    ))
+                  }
+                  
+                  {/* <li className="flex items-center">
                     <Check className="h-5 w-5 text-[#867cb3] mr-2" />
                     <span>Basic Templates</span>
                   </li>
                   <li className="flex items-center">
                     <Check className="h-5 w-5 text-[#867cb3] mr-2" />
                     <span>PDF Download</span>
-                  </li>
+                  </li> */}
                 </ul>
                 <Button variant="outline" className="w-full">
                   Get Started
@@ -322,7 +328,7 @@ export default function Home() {
                 Most Popular
               </div>
               <CardHeader>
-                <CardTitle>Pro</CardTitle>
+                <CardTitle>Premium Plus</CardTitle>
                 <CardDescription>For serious job seekers</CardDescription>
               </CardHeader>
               <CardContent>
@@ -331,11 +337,14 @@ export default function Home() {
                   <span className="text-gray-500">/month</span>
                 </div>
                 <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
+                  {premiumPlusFeatures.map((feat) => (
+                    <li className="flex items-center">
                     <Check className="h-5 w-5 text-[#867cb3] mr-2" />
-                    <span>Unlimited Resumes</span>
+                    <span>{feat}</span>
                   </li>
-                  <li className="flex items-center">
+                  ))}
+                  
+                  {/* <li className="flex items-center">
                     <Check className="h-5 w-5 text-[#867cb3] mr-2" />
                     <span>Premium Templates</span>
                   </li>
@@ -350,7 +359,7 @@ export default function Home() {
                   <li className="flex items-center">
                     <Check className="h-5 w-5 text-[#867cb3] mr-2" />
                     <span>Cloud Storage</span>
-                  </li>
+                  </li> */}
                 </ul>
                 <Button className="w-full bg-[#867cb3] hover:bg-[#756aa3]">
                   Upgrade Now
@@ -358,7 +367,7 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle>Enterprise</CardTitle>
                 <CardDescription>For teams and organizations</CardDescription>
@@ -394,7 +403,7 @@ export default function Home() {
                   Contact Sales
                 </Button>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </section>
