@@ -1,21 +1,51 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import GeneralInfoForm from "./forms/GeneralInfoForm";
-import PersonalInfoForm from "./forms/PersonalInfoForm";
+
 import { useSearchParams } from "next/navigation";
 import { steps } from "./steps";
 import Breadcrumbs from "./Breadcrumbs";
 import Footer from "./Footer";
 import { useState } from "react";
 import { ResumeValues } from "@/lib/validation";
+import ResumePreviewSection from "./ResumePreviewSection";
+import { cn, mapToResumeValues } from "@/lib/utils";
+import useUnloadWarning from "@/hooks/useUnloadWarning";
+import useAutoSaveResume from "./useAutoSaveResume";
+import { ResumeServerData } from "@/lib/types";
 
-const ResumeEditor = () => {
+interface ResumeEditorProps {
+  resumeToEdit: ResumeServerData | null;
+}
+
+const ResumeEditor = ({ resumeToEdit }: ResumeEditorProps) => {
 
   const searchParams = useSearchParams();
 
-  const [resumeData, setResumeData] = useState<ResumeValues>()
+  const [resumeData, setResumeData] = useState<ResumeValues>(
+    resumeToEdit ? mapToResumeValues(resumeToEdit) : 
+      {
+        // title: "",
+        // description: "",
+        // photo: null,
+        // firstName: "",
+        // lastName: "",
+        // jobTitle: "",
+        // city: "",
+        // country: "",
+        // phone: "",
+        // email: "",
+        // workExperiences: [],
+        // educations: [],
+        // skills: [],
+        // summary: "",
+      }
+  );
+
+  const [showSmResumePreview, setShowSmResumePreview] = useState(false);
+
+  const {isSaving, hasUnsavedChanges} = useAutoSaveResume(resumeData);
+
+  useUnloadWarning(hasUnsavedChanges);
 
   const currentStep = searchParams.get("step") || steps[0].key
 
@@ -29,6 +59,7 @@ const ResumeEditor = () => {
     step => step.key === currentStep
   )?.component;
 
+
   return <div className="flex grow flex-col">
     <header className="space-y-1.5 border-b px-3 py-5 text-center">
       <h1 className="text-2xl font-bold">Design your resume</h1>
@@ -38,19 +69,23 @@ const ResumeEditor = () => {
     </header>
     <main className="relative grow">
       <div className="absolute bottom-0 top-0 flex w-full">
-        <div className="w-full p-3 md:w-1/2 overflow-y-auto space-y-6">
+        <div className={cn("w-full p-3 md:w-1/2 overflow-y-auto space-y-6 md:block", 
+          showSmResumePreview && "hidden"
+        )}>
           <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
           {
             FormComponent && <FormComponent resumeData={resumeData} setResumeData={setResumeData} />
           }
         </div>
         <div className="grow md:border-r" />
-        <div className="hidden w-1/2 md:flex">
-          <pre>{JSON.stringify(resumeData, null, 2)}</pre>
-        </div>
+        <ResumePreviewSection resumeData={resumeData!} setResumeData={setResumeData} className={cn(showSmResumePreview && "flex")} />
       </div>
     </main>
-    <Footer currentStep={currentStep} setCurrentStep={setStep} />
+    <Footer currentStep={currentStep} setCurrentStep={setStep} 
+      showSmResumePreview={showSmResumePreview}
+      setShowSmResumePreview={setShowSmResumePreview}
+      isSaving={isSaving}
+    />
   </div>;
 };
 
