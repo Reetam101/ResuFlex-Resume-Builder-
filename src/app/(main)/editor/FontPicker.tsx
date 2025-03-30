@@ -28,7 +28,7 @@ export default function FontPicker({ fontStyle, onChange }: FontPickerProps) {
     <div className="flex flex-col items-center gap-4 p-6">
       <Combobox
         options={googleFonts.map(font => ({ label: font, value: font }))}
-        value={fontStyle}
+        value={fontStyle || "Monteserrat"}
         onChange={(val: string) => {
           setLoading(true);
           setTimeout(() => {
