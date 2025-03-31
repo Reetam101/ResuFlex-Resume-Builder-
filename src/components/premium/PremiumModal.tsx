@@ -1,5 +1,10 @@
+"use client"
+
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Check } from "lucide-react";
+import { Button } from "../ui/button";
+import usePremiumModal from "@/hooks/usePremiumModal";
 
 export const premiumFeatures = [
   "2 resumes",
@@ -16,8 +21,10 @@ export const premiumPlusFeatures = [
 ]
 
 export default function PremiumModal() {
+  const {open, setOpen} = usePremiumModal()
+
   return (
-    <Dialog open>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>
@@ -29,10 +36,30 @@ export default function PremiumModal() {
           <div className="flex">
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="text-center text-lg font-bold">Premium</h3>
+              <ul className="list-inside space-y-2">
+                {premiumFeatures.map(feature => (
+                  <li key={feature} className="flex items-center gap-2">
+                    <Check className="size-4 text-green-500" 
+                    />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Button>Get Premium</Button>
             </div>
             <div className="border-l mx-6" />
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="text-center text-lg font-bold bg-gradient-to-r from-purple-600 to-pruple-400 bg-clip-text text-transparent">Premium plus</h3>
+              <ul className="list-inside space-y-2">
+                {premiumPlusFeatures.map(feature => (
+                  <li key={feature} className="flex items-center gap-2">
+                    <Check className="size-4 text-green-500" 
+                    />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Button variant="premium">Get Premium Plus</Button>
             </div>
           </div>
         </div>

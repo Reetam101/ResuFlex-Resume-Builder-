@@ -295,7 +295,7 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <div className="mb-6">
-                  <span className="text-3xl sm:text-4xl font-bold">$5</span>
+                  <span className="text-3xl sm:text-4xl font-bold">₹199</span>
                   <span className="text-gray-500">/month</span>
                 </div>
                 <ul className="space-y-3 mb-8">
@@ -333,7 +333,7 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <div className="mb-6">
-                  <span className="text-3xl sm:text-4xl font-bold">$9</span>
+                  <span className="text-3xl sm:text-4xl font-bold">₹399</span>
                   <span className="text-gray-500">/month</span>
                 </div>
                 <ul className="space-y-3 mb-8">
