@@ -1,5 +1,12 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Check } from "lucide-react";
+import { Button } from "../ui/button";
+import usePremiumModal from "@/hooks/usePremiumModal";
+import { useToast } from "@/hooks/use-toast";
+import { createCheckoutSession } from "./actions";
 
 export const premiumFeatures = [
   "2 resumes",
@@ -16,8 +23,34 @@ export const premiumPlusFeatures = [
 ]
 
 export default function PremiumModal() {
+  const {open, setOpen} = usePremiumModal()
+
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+
+  async function handlePremiumClick(priceId: string) {
+    try {
+      setLoading(true)
+      const redirectUrl = await createCheckoutSession(priceId);
+
+      window.location.href = redirectUrl;
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        description: "Something went wrong. Please try again"
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <Dialog open>
+    <Dialog open={open} onOpenChange={(open) => {
+      if(!loading) {
+        setOpen(open)
+      }
+    }}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>
@@ -29,10 +62,32 @@ export default function PremiumModal() {
           <div className="flex">
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="text-center text-lg font-bold">Premium</h3>
+              <ul className="list-inside space-y-2">
+                {premiumFeatures.map(feature => (
+                  <li key={feature} className="flex items-center gap-2">
+                    <Check className="size-4 text-green-500" 
+                    />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Button onClick={() => handlePremiumClick(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY!)}
+                disabled={loading}>Get Premium</Button>
             </div>
             <div className="border-l mx-6" />
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="text-center text-lg font-bold bg-gradient-to-r from-purple-600 to-pruple-400 bg-clip-text text-transparent">Premium plus</h3>
+              <ul className="list-inside space-y-2">
+                {premiumPlusFeatures.map(feature => (
+                  <li key={feature} className="flex items-center gap-2">
+                    <Check className="size-4 text-green-500" 
+                    />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Button onClick={() => handlePremiumClick(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY!)}
+                disabled={loading} variant="premium">Get Premium Plus</Button>
             </div>
           </div>
         </div>
