@@ -23,6 +23,20 @@ export async function createCheckoutSession(priceId: string) {
       metadata: {
         userId: user.id
       }
+    },
+    custom_text: {
+      terms_of_service_acceptance: {
+        message: `I have read ResuFlex's [terms of services](${process.env.NEXT_PUBLIC_BASE_URL}/tos) and agree to them.`
+      }
+    },
+    consent_collection: {
+      terms_of_service: "required"
     }
   })
+
+  if(!session.url) {
+    throw new Error("Failed to create checkout session");
+  }
+
+  return session.url;
 }

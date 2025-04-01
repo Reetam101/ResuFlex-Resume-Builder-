@@ -3,9 +3,11 @@
 import logo from "@/assets/logo.png"
 import preview from "@/assets/preview.png"
 import { premiumFeatures, premiumPlusFeatures } from "@/components/premium/PremiumModal";
+import { Badge } from "@/components/ui/badge";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { scrollToSection } from "@/lib/utils";
 import { useAuth, UserButton } from "@clerk/nextjs";
 import { 
   Rocket, 
@@ -29,11 +31,13 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  const {isSignedIn } = useAuth()
+ const router = useRouter();
   return (
     <div className="min-h-screen bg-gradient-to-b from-[hsl(60 56% 91)] to-white">
       {/* Navigation */}
@@ -62,9 +66,17 @@ export default function Home() {
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-4 px-6">
-          <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]">Features</Button>
-          <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]">Pricing</Button>
-          <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]">Templates</Button>
+          <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]" onClick={() => router.push("/tos")}>Terms of Services</Button>
+          <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]" onClick={() => scrollToSection('features')}>Features</Button>
+          <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]" onClick={() => scrollToSection('pricing')}>Pricing</Button>
+          {/* <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3]">Templates</Button> */}
+          <Button variant="ghost" className="text-gray-700 hover:text-[#867cb3] relative group">
+  Templates
+  <span className="absolute -top-2 -right-2 bg-[#fff3cd] text-[#856404] text-[0.65rem] font-medium px-1.5 py-0.5 rounded-full border border-[#ffeeba] shadow-sm">
+    Coming Soon
+  </span>
+  <span className="sr-only">(Feature coming soon)</span>
+</Button>
           {
             isSignedIn ? (
               <div className="flex items-center gap-3">
@@ -147,7 +159,8 @@ export default function Home() {
           <Button size="lg" className="bg-[#867cb3] hover:bg-[#756aa3] px-6 sm:px-8">
             Get Started - It's Free
           </Button>
-          <Button size="lg" variant="outline" className="px-6 sm:px-8">
+          <Button size="lg" variant="outline" className="px-6 sm:px-8 relative">
+            <span className="absolute -top-2 -right-2 bg-[#fff3cd] text-[#856404] text-[0.65rem] font-medium px-1.5 py-0.5 rounded-full border border-[#ffeeba] shadow-sm">Coming soon</span>
             See Templates
           </Button>
         </div>
@@ -165,7 +178,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="bg-white py-12 md:py-20">
+      <section id="features" className="bg-white py-12 md:py-20">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-4">Powerful Features</h2>
           <p className="text-lg sm:text-xl text-center text-gray-600 mb-12 sm:mb-16 max-w-2xl mx-auto">
@@ -280,7 +293,7 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-12 md:py-20 bg-white">
+      <section id="pricing" className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-4">Simple, Transparent Pricing</h2>
           <p className="text-lg sm:text-xl text-center text-gray-600 mb-12 sm:mb-16 max-w-2xl mx-auto">
