@@ -39,7 +39,7 @@ export default function Home() {
  const {isSignedIn } = useAuth()
  const router = useRouter();
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[hsl(60 56% 91)] to-white">
+    <div className="min-h-screen bg-gradient-to-b bg-slate-100">
       {/* Navigation */}
       <nav className="container mx-auto px-4 sm:px-10 py-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
