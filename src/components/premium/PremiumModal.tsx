@@ -51,7 +51,7 @@ export default function PremiumModal() {
         setOpen(open)
       }
     }}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl bg-slate-100">
         <DialogHeader>
           <DialogTitle>
             ResuFlex Premium
