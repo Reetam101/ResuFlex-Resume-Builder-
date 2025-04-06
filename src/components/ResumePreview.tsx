@@ -17,14 +17,33 @@ export default function ResumePreview({resumeData, contentRef, className}: Resum
 
   const containerRef = useRef<HTMLDivElement>(null) 
   const { fontStyle } = resumeData;
-  console.log(resumeData)
+  console.log("resumeData: ", resumeData)
   console.log("fontStyle: ", fontStyle);
   const {width} = useDimensions(containerRef);
 
   return <div className={cn("bg-white text-black h-fit w-full aspect-[210/297]", className)}
     ref={containerRef}
   >
-    <div
+    {
+      resumeData?.template === "single" ? (
+        <div
+        className={cn("space-y-6 p-6", !width && "invisible")}
+        style={{
+          zoom: (1/794) * width,
+          fontFamily: fontStyle
+        }}
+        ref={contentRef}
+        id="resumePreviewContent"
+        >
+          <PersonalInfoHeader resumeData={resumeData} />
+          <SummarySection resumeData={resumeData} />
+          <WorkExperienceSection resumeData={resumeData} />
+          <EducationSection resumeData={resumeData} />
+          <SkillsSection resumeData={resumeData} />
+        </div>
+
+      ) : (
+        <div
     className={cn("space-y-6 p-6", !width && "invisible")}
     style={{
       zoom: (1/794) * width,
@@ -34,11 +53,22 @@ export default function ResumePreview({resumeData, contentRef, className}: Resum
     id="resumePreviewContent"
     >
       <PersonalInfoHeader resumeData={resumeData} />
+      <div className="grid grid-cols-2 gap-6">
+        <div className="space-y-6">
       <SummarySection resumeData={resumeData} />
+      <SkillsSection resumeData={resumeData} />
+
+        </div>
+        <div className="space-y-6">
       <WorkExperienceSection resumeData={resumeData} />
       <EducationSection resumeData={resumeData} />
-      <SkillsSection resumeData={resumeData} />
+        </div>
+      </div>
     </div>
+      )
+    }
+ 
+    
   </div>;
 }
 
