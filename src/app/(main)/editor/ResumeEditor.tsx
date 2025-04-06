@@ -83,10 +83,10 @@ const ResumeEditor = ({ resumeToEdit }: ResumeEditorProps) => {
             <div className="mb-2 w-full flex justify-center">
               {/* Icon representing single column layout */}
               <svg width="60" height="80" viewBox="0 0 60 80" className="text-gray-600">
-                <rect x="10" y="10" width="40" height="10" fill="currentColor" />
-                <rect x="10" y="25" width="40" height="10" fill="currentColor" />
-                <rect x="10" y="40" width="40" height="10" fill="currentColor" />
-                <rect x="10" y="55" width="40" height="10" fill="currentColor" />
+                <rect x="10" y="10" width="30" height="10" fill="currentColor" />
+                <rect x="10" y="25" width="30" height="10" fill="currentColor" />
+                <rect x="10" y="40" width="30" height="10" fill="currentColor" />
+                <rect x="10" y="55" width="30" height="10" fill="currentColor" />
               </svg>
             </div>
             <span className="text-sm font-medium">Single Column</span>
@@ -102,13 +102,13 @@ const ResumeEditor = ({ resumeToEdit }: ResumeEditorProps) => {
             <div className="mb-2 w-full flex justify-center">
               {/* Icon representing two column layout */}
               <svg width="60" height="80" viewBox="0 0 60 80" className="text-gray-600">
-                <rect x="5" y="10" width="25" height="10" fill="currentColor" />
+                <rect x="5" y="10" width="20" height="10" fill="currentColor" />
                 <rect x="35" y="10" width="20" height="10" fill="currentColor" />
-                <rect x="5" y="25" width="25" height="10" fill="currentColor" />
+                <rect x="5" y="25" width="20" height="10" fill="currentColor" />
                 <rect x="35" y="25" width="20" height="10" fill="currentColor" />
-                <rect x="5" y="40" width="25" height="10" fill="currentColor" />
+                <rect x="5" y="40" width="20" height="10" fill="currentColor" />
                 <rect x="35" y="40" width="20" height="10" fill="currentColor" />
-                <rect x="5" y="55" width="25" height="10" fill="currentColor" />
+                <rect x="5" y="55" width="20" height="10" fill="currentColor" />
                 <rect x="35" y="55" width="20" height="10" fill="currentColor" />
               </svg>
             </div>

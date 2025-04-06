@@ -40,5 +40,15 @@ export const steps: {
     title: "Summary",
     component: SummaryForm,
     key: 'summary'
-  }
+  },
+  // {
+  //   title: "Links",
+  //   component: LinksForm,
+  //   key: "link"
+  // },
+  // {
+  //   title: "Achievements",
+  //   component: AchievementsForm,
+  //   key: "achievement"
+  // }
 ]
